@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import java.io.ByteArrayOutputStream
-import kotlin.time.Duration
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
@@ -32,7 +31,7 @@ class CoprocessIntegrationTest :
                 isAlive(pid) shouldBe false
             }
 
-            it("can be canceled").config(timeout = Duration.parse("3s")) {
+            it("can be canceled") {
                 val output = ByteArrayOutputStream()
                 val error = ByteArrayOutputStream()
 

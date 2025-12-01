@@ -1,5 +1,6 @@
 package com.biewers2.coprocess
 
+import executor
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -25,9 +26,16 @@ internal object CoProcess {
         onStarted(handle)
 
         coroutineScope {
-            val inputJob = input?.let { launch { TransferIOStreams(input = it, output = handle.outputStream) } }
-            val outputJob = output?.let { launch { TransferIOStreams(input = handle.inputStream, output = it) } }
-            val errorJob = error?.let { launch { TransferIOStreams(input = handle.errorStream, output = it) } }
+            val inputJob =
+                input?.let {
+                    launch { TransferIOStreams(input = it, output = handle.outputStream) }
+                }
+            val outputJob =
+                output?.let {
+                    launch { TransferIOStreams(input = handle.inputStream, output = it) }
+                }
+            val errorJob =
+                error?.let { launch { TransferIOStreams(input = handle.errorStream, output = it) } }
 
             handle.join()
             inputJob?.join()
@@ -50,7 +58,7 @@ internal object CoProcess {
                 }
             }
 
-            (cont.context[ExecutorCoroutineDispatcher] ?: Dispatchers.IO).asExecutor().execute {
+            cont.executor.execute {
                 try {
                     logger.info("Coprocess awaiting completion")
                     waitFor()

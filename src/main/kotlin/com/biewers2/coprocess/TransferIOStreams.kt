@@ -1,12 +1,10 @@
 package com.biewers2.coprocess
 
+import executor
 import java.io.InputStream
 import java.io.OutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExecutorCoroutineDispatcher
-import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.slf4j.LoggerFactory
 
@@ -34,15 +32,12 @@ internal object TransferIOStreams {
 
     private suspend fun <T> withBlockingIO(block: () -> T): T =
         suspendCancellableCoroutine { cont ->
-            (cont.context[ExecutorCoroutineDispatcher] ?: Dispatchers.IO)
-                .also { logger.trace("Using executor ${it::class.java.name}") }
-                .asExecutor()
-                .execute {
-                    try {
-                        cont.resume(block())
-                    } catch (t: Throwable) {
-                        cont.resumeWithException(t)
-                    }
+            cont.executor.execute {
+                try {
+                    cont.resume(block())
+                } catch (t: Throwable) {
+                    cont.resumeWithException(t)
                 }
+            }
         }
 }

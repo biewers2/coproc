@@ -6,7 +6,7 @@ plugins {
 
 group = "com.biewers2"
 
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 
 repositories { mavenCentral() }
 
@@ -22,8 +22,6 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:1.5.21")
 }
 
-kotlin { jvmToolchain(11) }
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -31,7 +29,8 @@ publishing {
 
             pom {
                 name = "Coprocess"
-                description = "Coprocess is a Kotlin library for running programs asynchronously through coroutine suspension."
+                description =
+                    "Coprocess is a Kotlin library for running programs asynchronously through coroutine suspension."
                 url = "https://github.com/biewers2/coproc"
 
                 licenses {
