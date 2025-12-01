@@ -1,10 +1,11 @@
 package com.biewers2.coprocess
 
-import executor
 import java.io.InputStream
 import java.io.OutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.slf4j.LoggerFactory
 
@@ -21,23 +22,22 @@ internal object TransferIOStreams {
 
         logger.trace("Starting IO transfer")
         do {
-            when (val n = withBlockingIO { input.read(buf) }) {
+            when (val n = suspendIO { input.read(buf) }) {
                 -1 -> break
                 0 -> Unit
-                else -> withBlockingIO { output.write(buf, 0, n) }
+                else -> suspendIO { output.write(buf, 0, n) }
             }
         } while (true)
         logger.trace("IO transferring complete")
     }
 
-    private suspend fun <T> withBlockingIO(block: () -> T): T =
-        suspendCancellableCoroutine { cont ->
-            cont.executor.execute {
-                try {
-                    cont.resume(block())
-                } catch (t: Throwable) {
-                    cont.resumeWithException(t)
-                }
+    private suspend fun <T> suspendIO(block: () -> T): T = suspendCancellableCoroutine { cont ->
+        Dispatchers.IO.asExecutor().execute {
+            try {
+                cont.resume(block())
+            } catch (t: Throwable) {
+                cont.resumeWithException(t)
             }
         }
+    }
 }

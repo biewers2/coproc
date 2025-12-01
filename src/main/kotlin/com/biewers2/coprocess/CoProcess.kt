@@ -1,6 +1,5 @@
 package com.biewers2.coprocess
 
-import executor
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -58,7 +57,7 @@ internal object CoProcess {
                 }
             }
 
-            cont.executor.execute {
+            Dispatchers.IO.asExecutor().execute {
                 try {
                     logger.info("Coprocess awaiting completion")
                     waitFor()
