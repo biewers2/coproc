@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("jvm") version "2.2.21"
     id("io.kotest") version "6.0.5"
@@ -22,7 +24,12 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:1.5.21")
 }
 
-kotlin { jvmToolchain { languageVersion = JavaLanguageVersion.of(11) } }
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+kotlin { compilerOptions { jvmTarget = JvmTarget.JVM_1_8 } }
 
 publishing {
     publications {
