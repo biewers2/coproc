@@ -1,6 +1,7 @@
 package com.mintleaf
 
 import com.mintleaf.coprocess.CoProcess
+import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -14,14 +15,16 @@ import java.io.OutputStream
  */
 suspend fun coprocess(
     vararg command: String,
+    directory: File = File("."),
     input: InputStream? = null,
     output: OutputStream? = null,
     error: OutputStream? = null,
     onStarted: suspend (Process) -> Unit = {},
-): Int = coprocess(command.asList(), input, output, error, onStarted)
+): Int = coprocess(command.asList(), directory, input, output, error, onStarted)
 
 suspend fun coprocess(
     command: List<String>,
+    directory: File = File("."),
     input: InputStream? = null,
     output: OutputStream? = null,
     error: OutputStream? = null,
@@ -29,6 +32,7 @@ suspend fun coprocess(
 ): Int =
     CoProcess(
         command = command,
+        directory = directory,
         input = input,
         output = output,
         error = error,

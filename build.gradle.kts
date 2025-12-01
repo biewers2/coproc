@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "2.2.21"
     id("io.kotest") version "6.0.5"
+    `maven-publish`
 }
 
-group = "com.mintleaf"
+group = "com.biewers2"
 
 version = "1.0-SNAPSHOT"
 
@@ -21,6 +22,14 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:1.5.21")
 }
 
-kotlin { jvmToolchain(23) }
+kotlin { jvmToolchain(11) }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
 
 tasks.withType<Test> { useJUnitPlatform() }
