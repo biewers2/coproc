@@ -1,4 +1,4 @@
-package com.mintleaf
+package com.biewers2
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull

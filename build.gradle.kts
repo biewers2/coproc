@@ -28,6 +28,33 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
+
+            pom {
+                name = "Coprocess"
+                description = "Coprocess is a Kotlin library for running programs asynchronously through coroutine suspension."
+                url = "https://github.com/biewers2/coproc"
+
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = "biewers2"
+                        name = "Jake Biewer"
+                        email = "biewers2@gmail.com"
+                    }
+                }
+
+                scm {
+                    connection = "scm:git:git://github.com/biewers2/coproc.git"
+                    developerConnection = "scm:git:ssh://github.com/biewers2/coproc.git"
+                    url = "http://github.com/biewers2/coproc/"
+                }
+            }
         }
     }
 }

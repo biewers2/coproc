@@ -1,6 +1,6 @@
-package com.mintleaf
+package com.biewers2
 
-import com.mintleaf.coprocess.CoProcess
+import com.biewers2.coprocess.CoProcess
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream

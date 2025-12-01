@@ -1,6 +1,6 @@
-package com.mintleaf.coprocess
+package com.biewers2.coprocess
 
-import com.mintleaf.singleThreadedContext
+import com.biewers2.singleThreadedContext
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
