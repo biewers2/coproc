@@ -22,6 +22,8 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:1.5.21")
 }
 
+kotlin { jvmToolchain { languageVersion = JavaLanguageVersion.of(11) } }
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
