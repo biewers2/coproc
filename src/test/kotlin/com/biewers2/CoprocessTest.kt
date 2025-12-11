@@ -9,7 +9,7 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CoprocessIntegrationTest :
+class CoprocessTest :
     DescribeSpec({
         fun isAlive(pid: Long) = ProcessHandle.of(pid).let { it.isPresent && it.get().isAlive }
 
